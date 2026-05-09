@@ -1,0 +1,185 @@
+/* =========================================
+   1. VARIÁVEIS E RESET (CORE)
+========================================= */
+:root {
+    --primary: #ff9900;
+    --primary-dark: #cc7a00;
+    --primary-glow: rgba(255, 153, 0, 0.5);
+    --bg-dark: #050505;
+    --bg-sec: #0f0f0f;
+    --bg-glass: rgba(15, 15, 15, 0.6);
+    --white: #f5f5f5;
+    --gray: #2a2a2a;
+    --text-muted: #888;
+    --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    cursor: none; /* Oculta o cursor padrão para usar o customizado */
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--white);
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-dark); }
+::-webkit-scrollbar-thumb { background: var(--gray); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+/* =========================================
+   2. LOADER E CURSOR
+========================================= */
+#loader {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: #000; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; z-index: 10000;
+    transition: opacity 0.5s ease;
+}
+.loader-img { width: 120px; animation: pulse 1.5s infinite alternate; }
+.progress-container { width: 250px; height: 2px; background: #1a1a1a; margin-top: 30px; overflow: hidden; border-radius: 2px; }
+.progress-bar { height: 100%; background: var(--primary); width: 0%; box-shadow: 0 0 15px var(--primary); }
+.loader-text { margin-top: 15px; font-size: 0.7rem; letter-spacing: 4px; color: var(--primary); font-weight: 600; }
+
+@keyframes pulse { from { transform: scale(0.95); opacity: 0.6; } to { transform: scale(1.05); opacity: 1; } }
+
+#cursor {
+    width: 8px; height: 8px; background: var(--primary);
+    border-radius: 50%; position: fixed; pointer-events: none;
+    z-index: 9999; transition: transform 0.1s ease;
+}
+#cursor-follower {
+    width: 40px; height: 40px; border: 1px solid var(--primary);
+    border-radius: 50%; position: fixed; pointer-events: none;
+    z-index: 9998; transition: transform 0.15s ease;
+}
+.cursor-hover { transform: scale(1.8); background: rgba(255, 153, 0, 0.1); border-color: transparent; }
+
+/* =========================================
+   3. HEADER (GLASSMORPHISM)
+========================================= */
+header {
+    position: fixed; top: 0; width: 100%; padding: 25px 8%;
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 1000; transition: var(--transition);
+}
+header.scrolled {
+    padding: 15px 8%; background: var(--bg-glass);
+    backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.logo { height: 50px; }
+
+nav ul { display: flex; list-style: none; gap: 35px; }
+nav a { 
+    color: var(--white); text-decoration: none; font-weight: 600; 
+    font-size: 0.8rem; letter-spacing: 1.5px; text-transform: uppercase; 
+}
+nav a:hover { color: var(--primary); }
+
+.btn-nav {
+    padding: 10px 20px; border: 1px solid var(--primary); color: var(--white);
+    text-decoration: none; font-size: 0.75rem; font-weight: 700; border-radius: 4px;
+}
+.btn-nav:hover { background: var(--primary); color: #000; }
+
+/* =========================================
+   4. HERO SECTION
+========================================= */
+#hero {
+    height: 100vh; display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden; text-align: center;
+}
+#hero-canvas { position: absolute; top: 0; left: 0; z-index: 1; opacity: 0.6; }
+
+.hero-content { position: relative; z-index: 2; }
+.hero-content h1 { 
+    font-size: clamp(3rem, 12vw, 8rem); font-family: 'Montserrat'; font-weight: 900;
+    line-height: 0.9; margin-bottom: 20px;
+}
+.hero-content h1 span { color: var(--primary); text-shadow: 0 0 20px var(--primary-glow); }
+.hero-content p { font-size: 1rem; letter-spacing: 6px; color: var(--text-muted); text-transform: uppercase; }
+
+.btn-primary {
+    margin-top: 40px; padding: 18px 40px; background: var(--primary); color: #000;
+    text-decoration: none; font-weight: 800; border-radius: 4px; display: inline-block;
+    box-shadow: 0 10px 25px var(--primary-glow); transition: var(--transition);
+}
+.btn-primary:hover { transform: translateY(-5px); background: var(--primary-dark); }
+
+/* =========================================
+   5. GRID DE PRODUTOS
+========================================= */
+#produtos { padding: 100px 8%; background: var(--bg-sec); }
+.section-header { margin-bottom: 60px; }
+.section-header h2 { font-size: 3rem; font-family: 'Montserrat'; }
+.line { width: 80px; height: 4px; background: var(--primary); margin-top: 15px; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
+
+.card { 
+    background: var(--bg-dark); padding: 25px; border-radius: 15px;
+    border: 1px solid var(--gray); transition: var(--transition);
+    transform-style: preserve-3d;
+}
+.card:hover { border-color: var(--primary); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+.card img { width: 100%; height: 250px; object-fit: cover; border-radius: 8px; margin-bottom: 20px; }
+.card h3 { font-size: 1.2rem; margin-bottom: 10px; }
+.card .price { color: var(--primary); font-size: 1.5rem; font-weight: 800; display: block; margin-bottom: 20px; }
+
+.buy-btn {
+    width: 100%; padding: 12px; background: transparent; border: 1px solid var(--primary);
+    color: var(--white); font-weight: 700; border-radius: 5px; cursor: pointer; transition: 0.3s;
+}
+.buy-btn:hover { background: var(--primary); color: #000; }
+
+/* =========================================
+   6. SOBRE & CURIOSIDADES
+========================================= */
+#sobre { 
+    padding: 150px 8%; 
+    background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1527181152855-fc03fc7949c8?q=80&w=2070&auto=format&fit=crop');
+    background-size: cover; background-attachment: fixed;
+}
+.sobre-box { max-width: 700px; background: var(--bg-glass); padding: 50px; border-radius: 20px; backdrop-filter: blur(10px); border: 1px solid rgba(255,153,0,0.2); }
+.sobre-box h2 { font-size: 2.5rem; margin-bottom: 20px; font-family: 'Montserrat'; }
+
+.curio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; padding: 50px 0; }
+.curio-card { background: var(--bg-sec); padding: 40px; border-radius: 15px; text-align: center; border: 1px solid var(--gray); position: relative; overflow: hidden; }
+.curio-icon { font-size: 3rem; margin-bottom: 15px; }
+.curio-title { font-weight: 800; font-size: 1.2rem; margin-bottom: 10px; }
+.curio-desc { font-size: 0.9rem; color: var(--text-muted); }
+
+/* =========================================
+   7. WHATSAPP & FOOTER
+========================================= */
+.wpp-container { position: fixed; bottom: 30px; right: 30px; z-index: 999; display: flex; align-items: center; text-decoration: none; }
+.wpp-label { background: var(--primary); color: #000; padding: 10px 20px; border-radius: 20px 0 0 20px; font-weight: 800; font-size: 0.8rem; transform: translateX(20px); opacity: 0; transition: 0.4s; }
+.wpp-container:hover .wpp-label { transform: translateX(0); opacity: 1; }
+.wpp-icon { width: 60px; height: 60px; background: #25D366; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 10px 20px rgba(0,0,0,0.4); position: relative; z-index: 2; }
+
+footer { padding: 60px 8%; text-align: center; border-top: 1px solid var(--gray); }
+.footer-logo { height: 40px; margin-bottom: 20px; opacity: 0.5; }
+
+/* =========================================
+   8. ANIMAÇÕES DE REVELAÇÃO
+========================================= */
+.reveal { opacity: 0; transform: translateY(30px); transition: 0.8s ease-out; }
+.reveal-left { opacity: 0; transform: translateX(-30px); transition: 0.8s ease-out; }
+.active { opacity: 1; transform: translate(0); }
+
+@media (max-width: 768px) {
+    nav, #cursor, #cursor-follower { display: none; }
+    * { cursor: auto !important; }
+    header { padding: 20px 5%; }
+    .hero-content h1 { font-size: 4rem; }
+}
